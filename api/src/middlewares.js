@@ -42,7 +42,7 @@ function isAuthenticated(req, res, next) {
 
 function isAdmin(req, res, next) {
   console.log(req.payload);
-  if (req.payload.isAdmin == true) {
+  if (req.payload.isAdmin === true) {
     next();
   } else {
     res.status(403);

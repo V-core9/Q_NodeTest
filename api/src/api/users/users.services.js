@@ -29,12 +29,14 @@ function listUsers() {
 }
 
 function updateUser(data) {
+  if (data.password !== undefined) delete data.password;
   return db.user.update({
     where: {
       id: data.id,
     },
     data: {
       email: data.email,
+      isAdmin: data.isAdmin,
     }
   });
 }
