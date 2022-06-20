@@ -7,10 +7,23 @@ const {
   findBookById,
   listBooks,
   updateBook,
-  deleteBook
+  deleteBook,
+  listByAuthorId,
 } = require('./books.services');
 
 const router = express.Router();
+
+router.get('/me', isAuthenticated, async (req, res, next) => {
+  try {
+    if (req.payload.userId !== undefined) {
+      res.json(await listByAuthorId(req.payload.userId));
+    } else {
+      res.json(await listBooks());
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get('/:id?', isAuthenticated, async (req, res, next) => {
   try {
@@ -35,7 +48,14 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 
 router.put('/', isAuthenticated, async (req, res, next) => {
   try {
-    res.json(await updateBook(req.body));
+    const book = await findBookById(req.body.id);
+    if (book.authorId === req.payload.userId) {
+      res.json(await updateBook(req.body));
+    } else {
+      res.status(403).json({
+        message: 'You are not authorized to update this book',
+      });
+    }
   } catch (err) {
     next(err);
   }
@@ -44,10 +64,10 @@ router.put('/', isAuthenticated, async (req, res, next) => {
 router.delete('/', isAuthenticated, async (req, res, next) => {
   try {
     const book = await findBookById(req.body.id);
-    if (book.authorId !== req.payload.userId) {
-      res.status(401).json({ message: 'You are not authorized to delete this book' });
-    } else {
+    if (book.authorId === req.payload.userId) {
       res.json(await deleteBook(req.body.id));
+    } else {
+      res.status(401).json({ message: 'You are not authorized to delete this book' });
     }
   } catch (err) {
     next(err);

@@ -48,11 +48,20 @@ function deleteBook(bookId) {
   });
 }
 
+function listByAuthorId(authorId) {
+  return db.book.findMany({
+    where: {
+      authorId,
+    },
+  });
+}
+
 module.exports = {
   listBooks,
   findBookByTitle,
   findBookById,
   updateBook,
   createBook,
-  deleteBook
+  deleteBook,
+  listByAuthorId
 };
