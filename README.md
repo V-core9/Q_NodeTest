@@ -42,3 +42,38 @@ ___
 - api - Express.js API using Prisma, JWT and SQLite  
 - app - React App  
 - nginx - NGINX Configuration  
+
+## 🚀 Starting
+
+- Live Mode
+
+      sh run
+
+- Development Mode
+
+      sh run dev
+
+## Containers
+
+1. NGINX  
+  <http://localhost/>  
+  <http://localhost:80/>  
+
+2. Express.js API  
+  <http://localhost/api/>  
+  <http://localhost:2000/>  
+
+3. React.js APP  
+  <http://localhost/>  
+  <http://localhost:2500/>  
+
+4. MySQL  
+  <http://localhost:3306/>  
+
+5. phpMyAdmin  
+  <http://localhost:9000/>
+
+> NOTE:
+  NGINX is used to proxy requests and provide access to both APP and API.  
+  API => <http://localhost/api/>  
+  APP => <http://localhost/>  
