@@ -37,12 +37,6 @@ ___
 
 ## Submited Documents
 
-### Folder Structure
-
-- api - Express.js API using Prisma, JWT and SQLite  
-- app - React App  
-- nginx - NGINX Configuration  
-
 ## 🚀 Starting
 
 - Live Mode
@@ -52,6 +46,21 @@ ___
 - Development Mode
 
       sh run dev
+
+>### ⚠ NOTE
+>
+> Run this command to deploy/migrate database structure  
+
+    docker exec -it Q_api sh -c 'npm run prisma:deploy'
+
+### Folder Structure
+
+- api - Express.js API using Prisma and JWT  
+*[was using SQLite originally and can easily be moved back to it, or MongoDB but I have no experience with it yet so I went with MySQL to show off some docker skills]*  
+- app - React+Redux App  
+*[Generated using **create-react-app --template redux**, no experience with this yet but trying to manage something]*
+- mysql - MySQL Config and Initial SQL File
+- nginx - NGINX Configuration  
 
 ## Containers
 
