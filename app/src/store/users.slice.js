@@ -19,12 +19,11 @@ export const usersReducer = slice.reducer;
 
 function createInitialState() {
     return {
-        users: {}
+        users: []
     }
 }
 
 function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
 
     return {
         getAll: getAll()
@@ -33,7 +32,7 @@ function createExtraActions() {
     function getAll() {
         return createAsyncThunk(
             `${name}/getAll`,
-            async () => await fetchWrapper.get(baseUrl)
+            async () => await fetchWrapper.get(`http://localhost/api/users`)
         );
     }
 }
@@ -58,3 +57,5 @@ function createExtraReducers() {
         };
     }
 }
+
+export default slice.reducer;
