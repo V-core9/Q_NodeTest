@@ -41,9 +41,22 @@ ___
   <http://localhost/api/>  
   <http://localhost:2000/>  
 
+> Note:  
+>
+>- Postman Collection is available in the ./app folder.
+>- Basic test using Mocha available using a command:  
+
+    docker exec -it Q_api sh -c 'npm test'  
+
 3. React.js APP  
   <http://localhost/>  
   <http://localhost:2500/>  
+
+> Note:  
+>
+>- Basic tests using Jest available using a command:  
+
+    docker exec -it Q_app sh -c 'npm test'  
 
 4. MySQL  
   <http://localhost:3306/>  
