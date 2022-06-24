@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "37e069ad-d1db-4b77-b87e-12424c580b64",
+		"name": "Q_NodeTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11741951"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"slavko.vuletic92@gmail.com\",\r\n    \"password\": \"0123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"slavko.vuletic92@gmail.com\",\r\n    \"password\": \"0123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNTE4MzMzOS1iNzVmLTQ1MWYtYmQ1MS04NmQ2NDgyN2Q3OTgiLCJpc0FkbWluIjpmYWxzZSwianRpIjoiYWNhODM1MjYtMmZjZC00ZjE4LWFmYzEtZmJlZDM4YWU5MmY3IiwiaWF0IjoxNjU2MDY3MTA2LCJleHAiOjE2NTYwODE1MDZ9.GYI6PnSsF2RWIqtgrpR9d6uvGk4S_wH7zAZQBMXKIx4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/auth/refreshToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Listing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNTYyZjk1YS0wNzU4LTRiYjYtYmMwMi01YmNkMDg3MDE2MGEiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTU3MzQxODYsImV4cCI6MTY1NTczNDQ4Nn0.InLppLmX_NEmTpJYBNLfkw7ch2TOTEG8_BsHT6xJgtg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNTYyZjk1YS0wNzU4LTRiYjYtYmMwMi01YmNkMDg3MDE2MGEiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTU3MjA2NzQsImV4cCI6MTY1NTcyMDk3NH0.-QqIOnHD__8944Ysg6cfJEzO2RFMyU0SHj7yO2fxYqI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9a05f0ba-de69-4142-8161-ebb574eeed97\",\r\n    \"email\": \"yeamail@mail.gom\",\r\n    \"isAdmin\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "ByID || List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTA1ZjBiYS1kZTY5LTQxNDItODE2MS1lYmI1NzRlZWVkOTciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU1NzM0OTQyLCJleHAiOjE2NTU3MzUyNDJ9.H5b2ywr5W61aBchzfYrhKPME40mOYrf1uyL_CtS8b_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/books/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"books",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Personal [me] Books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTA1ZjBiYS1kZTY5LTQxNDItODE2MS1lYmI1NzRlZWVkOTciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU1NzM0NTc4LCJleHAiOjE2NTU3MzQ4Nzh9.XU6vjkJcuVY8Iy70gfXHz7sNGFRmADU-8WNFvzOaDjo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/books/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"books",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTA1ZjBiYS1kZTY5LTQxNDItODE2MS1lYmI1NzRlZWVkOTciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU1NzM0MjYwLCJleHAiOjE2NTU3MzQ1NjB9.Mdh8c-nzRwc_RATDQMD3v4OvYo7-FutFTIdxFI_srX4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"demo book title SEC\",\r\n    \"description\": \"some spaceholder\",\r\n    \"content\": \"some spaceholder\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/books/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"books",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTA1ZjBiYS1kZTY5LTQxNDItODE2MS1lYmI1NzRlZWVkOTciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU1NzM0NTc4LCJleHAiOjE2NTU3MzQ4Nzh9.XU6vjkJcuVY8Iy70gfXHz7sNGFRmADU-8WNFvzOaDjo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"b85b6570-a7b8-48ba-b782-96432c477d75\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/books/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"books",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTA1ZjBiYS1kZTY5LTQxNDItODE2MS1lYmI1NzRlZWVkOTciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU1NzM0OTQyLCJleHAiOjE2NTU3MzUyNDJ9.H5b2ywr5W61aBchzfYrhKPME40mOYrf1uyL_CtS8b_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"931ad540-ef68-4feb-8e7d-785b1d0579f0\",\r\n    \"title\": \"New Title Sample 001\",\r\n    \"content\": \"YEA SOme OCnnaSIDON sI NdOS dos Dm pADMd p\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/books/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"books",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
