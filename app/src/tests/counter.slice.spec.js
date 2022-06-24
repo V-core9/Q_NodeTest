@@ -3,13 +3,15 @@ import counterReducer, {
   decrement,
   incrementByAmount,
   setTo
-} from './counterSlice';
+} from '../store/counter.slice';
 
 describe('counter reducer', () => {
+
   const initialState = {
     value: 3,
     status: 'idle',
   };
+
   it('should handle initial state', () => {
     expect(counterReducer(undefined, { type: 'unknown' })).toEqual({
       value: 0,
@@ -36,4 +38,5 @@ describe('counter reducer', () => {
     const actual = counterReducer(initialState, setTo(2));
     expect(actual.value).toEqual(2);
   });
+
 });
