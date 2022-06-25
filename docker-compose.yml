@@ -29,6 +29,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${APP_DOCKER_PORT}
+      API_URL: ${API_URL}
     depends_on:
       - mysql
     mem_limit: 1024m
@@ -54,7 +55,6 @@ services:
       CORE_COUNT: ${API_CPUS}
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      API_URL: ${API_URL}
     depends_on:
       - mysql
     mem_limit: 2048m

@@ -77,7 +77,8 @@ router.post('/login', async (req, res, next) => {
 
     res.json({
       accessToken,
-      refreshToken
+      refreshToken,
+      isAdmin: existingUser.isAdmin
     });
   } catch (err) {
     next(err);

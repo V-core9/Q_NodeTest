@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 
 import { history } from './helpers';
 import { Nav, PrivateRoute } from './components';
-import { Home, Login, MyBooks } from './pages';
+import { Home, Login, MyBooks, Users, Register } from './pages';
 
 
 
@@ -33,11 +33,12 @@ function App() {
             path="/users"
             element={
               <PrivateRoute>
-                <MyBooks />
+                <Users />
               </PrivateRoute>
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
