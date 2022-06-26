@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 import { history } from './helpers';
-import { Nav, PrivateRoute } from './components';
-import { Home, Login, MyBooks, Users, Register } from './pages';
+import { Nav, PrivateRoute, PrivateRouteAdmin } from './components';
+import { Home, Login, MyBooks, Users, Register, Books } from './pages';
 
 
 
@@ -22,6 +22,14 @@ function App() {
             element={<Home />}
           />
           <Route
+            path="/books"
+            element={
+              <PrivateRoute>
+                <Books />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/myBooks"
             element={
               <PrivateRoute>
@@ -32,9 +40,9 @@ function App() {
           <Route
             path="/users"
             element={
-              <PrivateRoute>
+              <PrivateRouteAdmin>
                 <Users />
-              </PrivateRoute>
+              </PrivateRouteAdmin>
             }
           />
           <Route path="/login" element={<Login />} />

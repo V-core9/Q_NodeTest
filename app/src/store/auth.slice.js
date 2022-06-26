@@ -96,7 +96,7 @@ function createExtraReducers() {
   }
 
   function register() {
-    var { pending, fulfilled, rejected } = extraActions.login;
+    var { pending, fulfilled, rejected } = extraActions.register;
     return {
       [pending]: (state) => {
         state.error = null;

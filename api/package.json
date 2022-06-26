@@ -8,8 +8,9 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint --fix src",
     "test": "mocha --exit",
-    "prisma:deploy": "sh -c \" npm run prisma:reset ; npm run prisma:migrate \"",
+    "prisma:deploy": "sh -c \" npm run prisma:reset ; npm run prisma:migrate ; npm run prisma:seed \"",
     "prisma:migrate": "npx prisma migrate dev ",
+    "prisma:seed": "node prisma/seed.js",
     "prisma:reset": "echo \"y\"|npx prisma migrate reset"
   },
   "keywords": [],

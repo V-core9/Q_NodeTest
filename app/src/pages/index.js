@@ -5,6 +5,7 @@ export * from './Register';
 
 
 // Author [Private] Pages
+export * from './Books';
 export * from './MyBooks';
 
 
