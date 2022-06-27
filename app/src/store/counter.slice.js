@@ -7,7 +7,7 @@ const fetchCount = (amount = 1) => {
 };
 
 const initialState = {
-  value: 0,
+  value: parseInt(localStorage.getItem('testCounter')) || 0,
   status: 'idle',
 };
 
@@ -36,16 +36,20 @@ export const counterSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.value += 1;
+      localStorage.setItem('testCounter', state.value);
     },
     decrement: (state) => {
       state.value -= 1;
+      localStorage.setItem('testCounter', state.value);
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     incrementByAmount: (state, action) => {
       state.value += action.payload;
+      localStorage.setItem('testCounter', state.value);
     },
     setTo: (state, action) => {
       state.value = action.payload;
+      localStorage.setItem('testCounter', state.value);
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -58,6 +62,8 @@ export const counterSlice = createSlice({
       .addCase(incrementAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.value += action.payload;
+
+        localStorage.setItem('testCounter', state.value);
       });
   },
 });

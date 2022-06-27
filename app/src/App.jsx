@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 import { history } from './helpers';
-import { Nav, PrivateRoute, PrivateRouteAdmin } from './components';
+import { Nav, Footer, PrivateRoute, PrivateRouteAdmin } from './components';
 import { Home, Login, MyBooks, Users, Register, Books } from './pages';
 
 
@@ -13,7 +13,7 @@ function App() {
   history.location = useLocation();
 
   return (
-    <div className="app-container bg-light">
+    <div className="app-container">
       <Nav />
       <div className="container pt-4 pb-4">
         <Routes>
@@ -50,6 +50,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

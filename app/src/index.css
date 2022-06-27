@@ -11,3 +11,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#root,
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: stretch;
+  justify-content: space-between;
+  background: #1a242c;
+}
+
+.app-container>.container.pt-4.pb-4 {
+  flex: 1;
+  color: white;
+}
+
+nav,
+footer {
+  background: #151c22;
+}
+
+a.nav-item.nav-link.active {
+  color: white;
+}
+
+.card {
+  background-color: #263540;
+  box-shadow: 0 20px 40px -20px black;
+}
+
+.myBooks nav>.navbar-nav {
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.myBooks {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

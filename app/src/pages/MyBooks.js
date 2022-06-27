@@ -8,7 +8,7 @@ export { MyBooks };
 function MyBooks() {
     const dispatch = useDispatch();
     const user = useSelector(x => x.auth.user);
-    const myBooks = useSelector(x => x.myBooks.myBooks);
+    const { myBooks, newModalShow } = useSelector(x => x.myBooks);
 
 
     useEffect(() => {
@@ -18,9 +18,13 @@ function MyBooks() {
     }, []);
 
     return (
-        <div>
-            <h1>{user?.username} Books:</h1>
-            <h3>Books from secure api end point:</h3>
+        <div className="myBooks">
+            <nav className="navbar navbar-expand">
+                <div className="navbar-nav">
+                    <h1>{user?.username} Books:</h1>
+                    <button onClick={() => dispatch(myBooksActions.toggleNewModal())}>Create New ➕</button>
+                </div>
+            </nav>
             {myBooks.length &&
                 <ul>
                     {myBooks.map(book =>
@@ -30,6 +34,7 @@ function MyBooks() {
             }
             {myBooks.loading && <div className="spinner-border spinner-border-sm"></div>}
             {myBooks.error && <div className="text-danger">Error loading users: {myBooks.error.message}</div>}
+            {newModalShow && <h2>SHOWING NEW MODAL</h2>}
         </div>
     );
 }
