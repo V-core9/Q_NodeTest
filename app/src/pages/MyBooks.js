@@ -1,35 +1,35 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { userActions } from '../store';
+import { myBooksActions } from '../store';
 
 export { MyBooks };
 
 function MyBooks() {
     const dispatch = useDispatch();
-    const { user } = useSelector(x => x.auth);
-    const { users } = useSelector(x => x.users);
+    const user = useSelector(x => x.auth.user);
+    const myBooks = useSelector(x => x.myBooks.myBooks);
+
 
     useEffect(() => {
-        dispatch(userActions.getAll());
+        dispatch(myBooksActions.getMyBooks());
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div>
-            <h1>Hi {user?.email}!</h1>
-            <p>You're logged in with React 18 + Redux & JWT!!</p>
-            <h3>Users from secure api end point:</h3>
-            {users.length &&
+            <h1>{user?.username} Books:</h1>
+            <h3>Books from secure api end point:</h3>
+            {myBooks.length &&
                 <ul>
-                    {users.map(user =>
-                        <li key={user.id}>{user.email} {user.isAdmin}</li>
+                    {myBooks.map(book =>
+                        <li key={book.id}>{book.title}</li>
                     )}
                 </ul>
             }
-            {users.loading && <div className="spinner-border spinner-border-sm"></div>}
-            {users.error && <div className="text-danger">Error loading users: {users.error.message}</div>}
+            {myBooks.loading && <div className="spinner-border spinner-border-sm"></div>}
+            {myBooks.error && <div className="text-danger">Error loading users: {myBooks.error.message}</div>}
         </div>
     );
 }

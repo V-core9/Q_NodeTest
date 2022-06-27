@@ -4,7 +4,7 @@ const { findUserById, listUsers, updateUser } = require('./users.services');
 
 const router = express.Router();
 
-router.get('/', isAuthenticated, async (req, res, next) => {
+router.get('/', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json(await listUsers());
   } catch (err) {
