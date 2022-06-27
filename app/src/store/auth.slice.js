@@ -44,23 +44,32 @@ function createReducers() {
 }
 
 function createExtraActions() {
-  const baseUrl = `/api`;
 
   return {
-    login: login()
+    login: login(),
+    register: register(),
   };
 
   function login() {
     return createAsyncThunk(
       `${name}/login`,
-      async ({ email, password }) => await fetchWrapper.post(`${baseUrl}/auth/login`, { email, password })
+      async ({ email, password }) => await fetchWrapper.post(`http://localhost/api/auth/login`, { email, password })
+    );
+  }
+
+  function register() {
+    return createAsyncThunk(
+      `${name}/register`,
+      async ({ username, email, password }) => await fetchWrapper.post(`http://localhost/api/auth/register`, { username, email, password })
     );
   }
 }
 
 function createExtraReducers() {
+
   return {
-    ...login()
+    ...login(),
+    ...register(),
   };
 
   function login() {
@@ -85,4 +94,28 @@ function createExtraReducers() {
       }
     };
   }
+
+  function register() {
+    var { pending, fulfilled, rejected } = extraActions.register;
+    return {
+      [pending]: (state) => {
+        state.error = null;
+      },
+      [fulfilled]: (state, action) => {
+        const user = action.payload;
+
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
+
+        // get return url from location state or default to home page
+        const { from } = history.location.state || { from: { pathname: '/' } };
+        history.navigate(from);
+      },
+      [rejected]: (state, action) => {
+        state.error = action.error;
+      }
+    };
+  }
+
 }

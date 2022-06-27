@@ -35,7 +35,9 @@ router.post('/register', async (req, res, next) => {
       throw new Error('Email already in use.');
     }
 
-    const user = await createUserByEmailAndPassword({ email, password });
+    const username = req.body.username || uuidv4();
+
+    const user = await createUserByEmailAndPassword({ email, password, username });
     const jti = uuidv4();
     const { accessToken, refreshToken } = generateTokens(user, jti);
     await addRefreshTokenToWhitelist({ jti, refreshToken, userId: user.id });
@@ -77,7 +79,8 @@ router.post('/login', async (req, res, next) => {
 
     res.json({
       accessToken,
-      refreshToken
+      refreshToken,
+      isAdmin: existingUser.isAdmin
     });
   } catch (err) {
     next(err);

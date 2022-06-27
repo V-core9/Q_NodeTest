@@ -29,6 +29,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${APP_DOCKER_PORT}
+      API_URL: ${API_URL}
     depends_on:
       - mysql
     mem_limit: 1024m

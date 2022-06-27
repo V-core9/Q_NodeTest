@@ -4,7 +4,7 @@ import { fetchWrapper } from '../helpers';
 
 // create slice
 
-const name = 'users';
+const name = 'books';
 const initialState = createInitialState();
 const extraActions = createExtraActions();
 const extraReducers = createExtraReducers();
@@ -12,14 +12,14 @@ const slice = createSlice({ name, initialState, extraReducers });
 
 // exports
 
-export const userActions = { ...slice.actions, ...extraActions };
-export const usersReducer = slice.reducer;
+export const bookActions = { ...slice.actions, ...extraActions };
+export const booksReducer = slice.reducer;
 
 // implementation
 
 function createInitialState() {
     return {
-        users: []
+        books: []
     }
 }
 
@@ -32,7 +32,7 @@ function createExtraActions() {
     function getAll() {
         return createAsyncThunk(
             `${name}/getAll`,
-            async () => await fetchWrapper.get(`http://localhost/api/users`)
+            async () => await fetchWrapper.get(`http://localhost/api/books`)
         );
     }
 }
@@ -46,13 +46,13 @@ function createExtraReducers() {
         var { pending, fulfilled, rejected } = extraActions.getAll;
         return {
             [pending]: (state) => {
-                state.users = { loading: true };
+                state.books = { loading: true };
             },
             [fulfilled]: (state, action) => {
-                state.users = action.payload;
+                state.books = action.payload;
             },
             [rejected]: (state, action) => {
-                state.users = { error: action.error };
+                state.books = { error: action.error };
             }
         };
     }
