@@ -7,7 +7,6 @@ export { Books };
 
 function Books() {
     const dispatch = useDispatch();
-    const { user } = useSelector(x => x.auth);
     const { books } = useSelector(x => x.books);
 
     useEffect(() => {
@@ -18,12 +17,14 @@ function Books() {
 
     return (
         <div>
-            <h1>Hi {user?.email}!</h1>
-            <h3>Books from secure api end point:</h3>
+            <h3>Public Books Listing:</h3>
             {books.length &&
                 <ul>
-                    {books.map(user =>
-                        <li key={user.id}>{user.email} {user.isAdmin}</li>
+                    {books.map(book =>
+                        <li key={book.id}>
+                            <h4>{book.title}</h4>
+                            <p>AuthorID: {book.authorId}</p>
+                        </li>
                     )}
                 </ul>
             }

@@ -37,11 +37,7 @@ function Login() {
     }
 
     return (
-        <div className="col-md-6 offset-md-3 mt-5">
-            <div className="alert alert-info">
-                Email: slavko.vuletic92@gmail.com<br />
-                Password: 0123456789
-            </div>
+        <div className="col-md-6 offset-md-3 mt-5 ">
             <div className="card">
                 <h4 className="card-header">Login</h4>
                 <div className="card-body">
@@ -65,6 +61,11 @@ function Login() {
                         }
                     </form>
                 </div>
+            </div>
+            <div className="alert alert-info mt-5">
+                <h3>Demo Admin Account:</h3>
+                <p>Email: slavko.vuletic92@gmail.com<br />
+                    Password: 0123456789</p>
             </div>
         </div>
     )

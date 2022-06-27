@@ -1,35 +1,40 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { userActions } from '../store';
+import { myBooksActions } from '../store';
 
 export { MyBooks };
 
 function MyBooks() {
     const dispatch = useDispatch();
-    const { user } = useSelector(x => x.auth);
-    const { users } = useSelector(x => x.users);
+    const user = useSelector(x => x.auth.user);
+    const { myBooks, newModalShow } = useSelector(x => x.myBooks);
+
 
     useEffect(() => {
-        dispatch(userActions.getAll());
+        dispatch(myBooksActions.getMyBooks());
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div>
-            <h1>Hi {user?.email}!</h1>
-            <p>You're logged in with React 18 + Redux & JWT!!</p>
-            <h3>Users from secure api end point:</h3>
-            {users.length &&
+        <div className="myBooks">
+            <nav className="navbar navbar-expand">
+                <div className="navbar-nav">
+                    <h1>{user?.username} Books:</h1>
+                    <button onClick={() => dispatch(myBooksActions.toggleNewModal())}>Create New ➕</button>
+                </div>
+            </nav>
+            {myBooks.length &&
                 <ul>
-                    {users.map(user =>
-                        <li key={user.id}>{user.email} {user.isAdmin}</li>
+                    {myBooks.map(book =>
+                        <li key={book.id}>{book.title}</li>
                     )}
                 </ul>
             }
-            {users.loading && <div className="spinner-border spinner-border-sm"></div>}
-            {users.error && <div className="text-danger">Error loading users: {users.error.message}</div>}
+            {myBooks.loading && <div className="spinner-border spinner-border-sm"></div>}
+            {myBooks.error && <div className="text-danger">Error loading users: {myBooks.error.message}</div>}
+            {newModalShow && <h2>SHOWING NEW MODAL</h2>}
         </div>
     );
 }

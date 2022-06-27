@@ -7,7 +7,7 @@ export { Users };
 
 function Users() {
     const dispatch = useDispatch();
-    const { user } = useSelector(x => x.auth);
+    const user = useSelector(x => x.auth.user);
     const { users } = useSelector(x => x.users);
 
     useEffect(() => {
@@ -18,8 +18,8 @@ function Users() {
 
     return (
         <div>
-            <h1>Hi {user?.email}!</h1>
-            <p>You're logged in with React 18 + Redux & JWT!!</p>
+            <h1>Hi {user?.username}!</h1>
+            <p>This is an example Admin Page</p>
             <h3>Users from secure api end point:</h3>
             {users.length &&
                 <ul>
