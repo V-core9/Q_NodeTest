@@ -40,7 +40,9 @@ function createInitialState() {
 function createExtraActions() {
 
     return {
-        getMyBooks: getMyBooks()
+        getMyBooks: getMyBooks(),
+        newBook: newBook(),
+        deleteBook: deleteBook(),
     };
 
     function getMyBooks() {
@@ -49,11 +51,28 @@ function createExtraActions() {
             async () => await fetchWrapper.get(`http://localhost/api/books/me`)
         );
     }
+
+    function newBook() {
+        return createAsyncThunk(
+            `${name}/newBook`,
+            async ({ title, description, content }) => await fetchWrapper.post(`http://localhost/api/books/`, { title, description, content })
+        );
+    }
+
+    function deleteBook() {
+        return createAsyncThunk(
+            `${name}/deleteBook`,
+            async ({ id }) => await fetchWrapper.delete(`http://localhost/api/books/`, { id })
+        );
+    }
 }
+
 
 function createExtraReducers() {
     return {
-        ...getMyBooks()
+        ...getMyBooks(),
+        ...newBook(),
+        ...deleteBook(),
     };
 
     function getMyBooks() {
@@ -67,6 +86,41 @@ function createExtraReducers() {
             },
             [rejected]: (state, action) => {
                 state.myBooks = { error: action.error };
+            }
+        };
+    }
+
+    function newBook() {
+        var { pending, fulfilled, rejected } = extraActions.newBook;
+        return {
+            [pending]: (state) => {
+                state.error = null;
+            },
+            [fulfilled]: (state, action) => {
+                state.myBooks.push(action.payload);
+                console.log('newBookAction Done: ', state);
+            },
+            [rejected]: (state, action) => {
+                state.error = action.error;
+            }
+        };
+    }
+
+    function deleteBook() {
+        var { pending, fulfilled, rejected } = extraActions.deleteBook;
+        return {
+            [pending]: (state) => {
+                state.error = null;
+            },
+            [fulfilled]: (state, action) => {
+                //state.myBooks.push(action.payload);
+                const newState = [];
+                state.myBooks.map((value) => (value.id !== action.payload.id) ? newState.push(value) : null);
+                state.myBooks = newState;
+                console.log('deleteBook Done: ', state);
+            },
+            [rejected]: (state, action) => {
+                state.error = action.error;
             }
         };
     }
