@@ -53,3 +53,98 @@ a.nav-item.nav-link.active {
   display: flex;
   flex-direction: column;
 }
+
+
+.myBooks .modal {
+  display: block;
+  z-index: 100;
+  background: #1e2730e0;
+}
+
+.myBooks .modal .modal-content {
+  background: #151c22;
+  background-color: #151c22;
+  box-shadow: 0 20px 50px -20px black;
+  border: 2px solid #1a242c;
+}
+
+.myBooks .modal .modal-content .modal-header {
+  border-bottom: 1px solid #1a242c;
+}
+
+.myBooks .modal .modal-content .modal-footer {
+  border-top: 1px solid #1a242c;
+}
+
+ul>li.list-group-item {
+  background: #0000000f;
+  color: #607d8b;
+}
+
+ul>li.list-group-item h5 {
+  color: white;
+}
+
+ul>li.list-group-item:hover {
+  background: #ffffff0f;
+}
+
+.app-container button {
+  border: 3px solid #151c2296;
+}
+
+
+
+.books .row>div>.card {
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.books .row>div>.card img {
+  max-width: 96px;
+  height: 100%;
+  align-self: center;
+  background: #1a242c;
+  margin: .5rem;
+}
+
+.books .row>div>.card>.card-body {
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.adminUsers .card {
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.adminUsers .card img {
+  max-width: 96px;
+  height: 100%;
+  align-self: center;
+  background: #1a242c;
+  margin: .5rem;
+}
+
+.adminUsers div>.card>.card-body {
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+
+.adminUsers ul>li.list-group-item {
+  padding: 0;
+}
