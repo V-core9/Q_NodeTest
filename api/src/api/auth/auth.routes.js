@@ -8,7 +8,9 @@ const {
   findUserById
 } = require('../users/users.services');
 const { generateTokens } = require('../../utils/jwt');
+const { isAuthenticated, isAdmin } = require('../../middlewares');
 const {
+  listRefreshToken,
   addRefreshTokenToWhitelist,
   findRefreshTokenById,
   deleteRefreshToken,
@@ -19,6 +21,13 @@ const { hashToken } = require('../../utils/hashToken');
 
 const router = express.Router();
 
+router.get('/', isAuthenticated, isAdmin, async (req, res, next) => {
+  try {
+    res.json(await listRefreshToken());
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post('/register', async (req, res, next) => {
   try {

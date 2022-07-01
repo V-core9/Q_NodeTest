@@ -41,9 +41,12 @@ function revokeTokens(userId) {
   });
 }
 
+const listRefreshToken = async () => db.refreshToken.findMany();
+
 module.exports = {
   addRefreshTokenToWhitelist,
   findRefreshTokenById,
   deleteRefreshToken,
-  revokeTokens
+  revokeTokens,
+  listRefreshToken
 };
