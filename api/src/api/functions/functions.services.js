@@ -2,7 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const { db } = require('../../utils/db');
 
-const tempFilePath = path.join(__dirname, '$.js');
+const tempFileName = 'tempFileName';
+const tempFilePath = path.join(__dirname, `${tempFileName}.js`);
 
 function createFunc(func) {
   return db.function.create({ data: func });
@@ -29,19 +30,30 @@ function listFunctions() {
 }
 
 function runIt(func, args) {
-  fs.writeFileSync(tempFilePath, `module.exports = (args) => {${func.content}}`);
-  let response;
+  const response = {
+    output: null,
+    execTime: Date.now(),
+  };
+
   try {
-    response = require('./$')(args);
+    // Create a file that exports function with func.content
+    fs.writeFileSync(tempFilePath, `module.exports = (args) => {${func.content}}`);
+    // Require & Trigger Function from a file
+    response.output = require(`./${tempFileName}`)(args);
+    // Delete cached require module
+    delete require.cache[require.resolve(`./${tempFileName}`)];
+    // Remove the temporary file
+    fs.unlinkSync(tempFilePath);
   } catch (error) {
-    response = error;
+    response.output = error;
   }
-  fs.unlinkSync(tempFilePath);
+
+  response.execTime = Date.now() - response.execTime;
+
   return response;
 }
 
 async function runByName(data) {
-  console.log(data);
   const rez = await db.function.findFirst({
     where: {
       name: data.name

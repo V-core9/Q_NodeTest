@@ -40,6 +40,18 @@ router.get('/byName/:name?', async (req, res, next) => {
   }
 });
 
+router.post('/run', async (req, res, next) => {
+  try {
+    if (!req.body.id) {
+      res.json(await runByName({ name: req.body.name, args: req.body.args }));
+    } else {
+      res.json(await runById({ id: req.body.id, args: req.body.args }));
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/run/byId/:id', async (req, res, next) => {
   try {
     res.json(await runById({ id: req.params.id, args: req.body }));
@@ -47,6 +59,7 @@ router.post('/run/byId/:id', async (req, res, next) => {
     next(err);
   }
 });
+
 router.post('/run/byName/:name', async (req, res, next) => {
   try {
     res.json(await runByName({ name: req.params.name, args: req.body }));
