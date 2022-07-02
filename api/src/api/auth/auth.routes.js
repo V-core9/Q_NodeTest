@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+const v_to_sha256 = require('v_to_sha256');
 const {
   findUserByEmail,
   createUserByEmailAndPassword,
@@ -14,7 +15,6 @@ const {
   deleteRefreshToken,
   revokeTokens
 } = require('./auth.services');
-const { hashToken } = require('../../utils/hashToken');
 
 
 const router = express.Router();
@@ -104,7 +104,7 @@ router.post('/refreshToken', async (req, res, next) => {
       throw new Error('Unauthorized');
     }
 
-    const hashedToken = hashToken(refreshToken);
+    const hashedToken = v_to_sha256.sync(refreshToken);
     if (hashedToken !== savedRefreshToken.hashedToken) {
       res.status(401);
       throw new Error('Unauthorized');

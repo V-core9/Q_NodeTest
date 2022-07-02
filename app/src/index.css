@@ -148,3 +148,8 @@ ul>li.list-group-item:hover {
 .adminUsers ul>li.list-group-item {
   padding: 0;
 }
+
+
+div#navbarScroll>* {
+  flex: 1;
+}

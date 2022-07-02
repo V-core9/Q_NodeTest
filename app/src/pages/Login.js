@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { isEmptySync } from 'v_is_empty_value';
+
 import { history } from '../helpers';
 import { authActions } from '../store';
 
@@ -17,7 +19,7 @@ function Login() {
     useEffect(() => {
         // redirect to home if already logged in
         if (authUser) history.navigate('/');
-
+        console.log('test', isEmptySync(''));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

@@ -18,9 +18,17 @@ function Users() {
 
     return (
         <div className="adminUsers">
-            <h1>Hi {user?.username}!</h1>
-            <p>This is an example Admin Page</p>
-            <h3>Users from secure api end point:</h3>
+            <div className="d-flex w-100 justify-content-between">
+                <h5 className="mb-1">Hi {user?.username}!</h5>
+                <p>This is an example Admin Page</p>
+                <small>
+                    <select className="form-select">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                    </select>
+                </small>
+            </div>
             {users.length &&
                 <ul className="list-group">
                     {users.map(user =>
