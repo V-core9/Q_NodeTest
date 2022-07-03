@@ -1,5 +1,5 @@
 const express = require('express');
-const { isAuthenticated } = require('../../middlewares');
+const { isAuthenticated, isAdmin } = require('../../middlewares');
 const {
   createFunc,
   findById,
@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 
 // POST / Create a function
-router.post('/', isAuthenticated, async (req, res, next) => {
+router.post('/', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     req.body.authorId = req.payload.userId;
     res.json(await createFunc(req.body));
@@ -24,7 +24,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 });
 
 // GET Function by ID or Listing all.
-router.get('/:id?', async (req, res, next) => {
+router.get('/:id?', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json((req.params.id === undefined) ? await listFunctions() : await findById(req.params.id));
   } catch (err) {
@@ -33,7 +33,7 @@ router.get('/:id?', async (req, res, next) => {
 });
 
 // GET Function By Name
-router.get('/byName/:name', async (req, res, next) => {
+router.get('/byName/:name', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json(await findByName(req.params.name));
   } catch (err) {
@@ -42,7 +42,7 @@ router.get('/byName/:name', async (req, res, next) => {
 });
 
 // PUT / Update a function
-router.put('/:id?', async (req, res, next) => {
+router.put('/:id?', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     const data = (req.params.id === undefined) ? req.body : { id: req.params.id, ...req.body };
     res.json(await updateFunction(data));
@@ -52,7 +52,7 @@ router.put('/:id?', async (req, res, next) => {
 });
 
 // DELETE / Remove a function
-router.delete('/:id?', async (req, res, next) => {
+router.delete('/:id?', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json(await deleteFunction((req.params.id === undefined) ? req.body.id : req.params.id));
   } catch (err) {
@@ -61,7 +61,7 @@ router.delete('/:id?', async (req, res, next) => {
 });
 
 // RUN Function
-router.post('/run', async (req, res, next) => {
+router.post('/run', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     if (!req.body.id) {
       res.json(await runByName({ name: req.body.name, args: req.body.args }));
@@ -74,7 +74,7 @@ router.post('/run', async (req, res, next) => {
 });
 
 // RUN Function byId
-router.post('/run/byId/:id', async (req, res, next) => {
+router.post('/run/byId/:id', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json(await runById({ id: req.params.id, args: req.body }));
   } catch (err) {
@@ -83,7 +83,7 @@ router.post('/run/byId/:id', async (req, res, next) => {
 });
 
 // RUN Function byName
-router.post('/run/byName/:name', async (req, res, next) => {
+router.post('/run/byName/:name', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     res.json(await runByName({ name: req.params.name, args: req.body }));
   } catch (err) {

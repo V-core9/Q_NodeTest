@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 
 import { history } from './helpers';
 import { Nav, Footer, PrivateRoute, PrivateRouteAdmin } from './components';
-import { Home, Login, MyBooks, Users, Register, Books } from './pages';
+import { Home, Login, MyBooks, Register, Books, Users, Functions } from './pages';
 
 
 
@@ -42,6 +42,14 @@ function App() {
             element={
               <PrivateRouteAdmin>
                 <Users />
+              </PrivateRouteAdmin>
+            }
+          />
+          <Route
+            path="/functions"
+            element={
+              <PrivateRouteAdmin>
+                <Functions />
               </PrivateRouteAdmin>
             }
           />

@@ -36,18 +36,24 @@ function authHeader(url) {
 }
 
 function authToken() {
-    return store.getState().auth.user?.accessToken;
+    return store.getState().auth.user?.accessToken.token;
 }
 
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-
+        console.log(data);
         if (!response.ok) {
             if ([401, 403].includes(response.status) && authToken()) {
-                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                const logout = () => store.dispatch(authActions.logout());
-                logout();
+
+                if (data.message === 'TokenExpiredError') {
+                    const refreshToken = () => store.dispatch(authActions.refreshToken({ refreshToken: store.getState().auth.user?.refreshToken.token }));
+                    refreshToken();
+                } else {
+                    // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                    const logout = () => store.dispatch(authActions.logout());
+                    logout();
+                }
             }
 
             const error = (data && data.message) || response.statusText;

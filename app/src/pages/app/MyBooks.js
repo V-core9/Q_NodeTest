@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NewBookModal } from '../components';
+import { NewBookModal } from '../../components';
 
-import { myBooksActions } from '../store';
+import { myBooksActions } from '../../store';
 
 export { MyBooks };
 

@@ -1,4 +1,4 @@
-import { Counter } from '../components';
+import { Counter } from '../../components';
 
 export { Home };
 

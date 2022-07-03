@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { bookActions } from '../store';
+import { bookActions } from '../../store';
 
 export { Books };
 
