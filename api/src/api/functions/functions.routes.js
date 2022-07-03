@@ -6,11 +6,14 @@ const {
   findByName,
   listFunctions,
   runById,
-  runByName
+  runByName,
+  updateFunction,
+  deleteFunction
 } = require('./functions.services');
 
 const router = express.Router();
 
+// POST / Create a function
 router.post('/', isAuthenticated, async (req, res, next) => {
   try {
     req.body.authorId = req.payload.userId;
@@ -20,19 +23,17 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   }
 });
 
+// GET Function by ID or Listing all.
 router.get('/:id?', async (req, res, next) => {
   try {
-    if (req.params.id === undefined) {
-      res.json(await listFunctions());
-    } else {
-      res.json(await findById(req.params.id));
-    }
+    res.json((req.params.id === undefined) ? await listFunctions() : await findById(req.params.id));
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/byName/:name?', async (req, res, next) => {
+// GET Function By Name
+router.get('/byName/:name', async (req, res, next) => {
   try {
     res.json(await findByName(req.params.name));
   } catch (err) {
@@ -40,6 +41,26 @@ router.get('/byName/:name?', async (req, res, next) => {
   }
 });
 
+// PUT / Update a function
+router.put('/:id?', async (req, res, next) => {
+  try {
+    const data = (req.params.id === undefined) ? req.body : { id: req.params.id, ...req.body };
+    res.json(await updateFunction(data));
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE / Remove a function
+router.delete('/:id?', async (req, res, next) => {
+  try {
+    res.json(await deleteFunction((req.params.id === undefined) ? req.body.id : req.params.id));
+  } catch (err) {
+    next(err);
+  }
+});
+
+// RUN Function
 router.post('/run', async (req, res, next) => {
   try {
     if (!req.body.id) {
@@ -52,6 +73,7 @@ router.post('/run', async (req, res, next) => {
   }
 });
 
+// RUN Function byId
 router.post('/run/byId/:id', async (req, res, next) => {
   try {
     res.json(await runById({ id: req.params.id, args: req.body }));
@@ -60,6 +82,7 @@ router.post('/run/byId/:id', async (req, res, next) => {
   }
 });
 
+// RUN Function byName
 router.post('/run/byName/:name', async (req, res, next) => {
   try {
     res.json(await runByName({ name: req.params.name, args: req.body }));

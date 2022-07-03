@@ -9,6 +9,26 @@ function createFunc(func) {
   return db.function.create({ data: func });
 }
 
+function updateFunction(func) {
+  return db.function.update({
+    where: {
+      id: func.id,
+    },
+    data: {
+      name: func.name,
+      content: func.content,
+    }
+  });
+}
+
+function deleteFunction(id) {
+  return db.function.delete({
+    where: {
+      id,
+    }
+  });
+}
+
 function findById(id) {
   return db.function.findUnique({
     where: {
@@ -79,5 +99,7 @@ module.exports = {
   findByName,
   createFunc,
   runByName,
-  runById
+  runById,
+  updateFunction,
+  deleteFunction
 };
