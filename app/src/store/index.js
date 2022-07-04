@@ -5,12 +5,14 @@ import authNew from './authNew.slice';
 import users from './users.slice';
 import books from './books.slice';
 import myBooks from './myBooks.slice';
+import appFunctions from './appFunctions.slice';
 
 export * from './auth.slice';
 export * from './authNew.slice';
 export * from './users.slice';
 export * from './books.slice';
 export * from './myBooks.slice';
+export * from './appFunctions.slice';
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +22,6 @@ export const store = configureStore({
     users,
     books,
     myBooks,
+    appFunctions,
   },
 });

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NewBookModal } from '../../components';
+
+import { BookNewModal, BooksListItem, BookEditModal } from '../../components';
 
 import { myBooksActions } from '../../store';
 
@@ -31,39 +32,14 @@ function MyBooks() {
             {myBooks.length &&
                 <ul className="list-group">
                     {myBooks.map(book =>
-                        <li className="list-group-item" key={book.id}>
-                            <div className="d-flex w-100 justify-content-between">
-                                <h5 className="mb-1">{book.title}</h5>
-                                <small>
-                                    <button className="btn-secondary" onClick={() => console.log("I will open edit book!")}>🎨 Edit</button>
-                                    <button className="btn-danger" onClick={() => dispatch(myBooksActions.deleteBook({ id: book.id }))} title="Delete Book">❌ Delete</button>
-                                </small>
-                            </div>
-                            <p className="mb-1">{book.description}</p>
-                            <small>ID: {book.id}</small>
-                        </li>
+                        <BooksListItem book={book} />
                     )}
                 </ul>
             }
-            <nav className="navbar navbar-expand">
-                <div className="navbar-nav">
-                    <select className="form-select">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                    </select>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </div>
-            </nav>
             {myBooks.loading && <div className="spinner-border spinner-border-sm"></div>}
             {myBooks.error && <div className="text-danger">Error loading MyBooks: {myBooks.error.message}</div>}
-            <NewBookModal />
+            <BookNewModal />
+            <BookEditModal />
         </div>
     );
 }

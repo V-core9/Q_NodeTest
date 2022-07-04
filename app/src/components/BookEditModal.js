@@ -2,23 +2,23 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { myBooksActions } from '../store';
 
-import { NewBookForm } from '.';
+import { BookEditForm } from '.';
 
 const { toggleNewModal } = myBooksActions;
 
 
-export function NewBookModal() {
+export function BookEditModal() {
 
     const dispatch = useDispatch();
-    const { newModalShow } = useSelector(x => x.myBooks);
+    const { editing } = useSelector(x => x.myBooks);
 
-    if (!newModalShow) return '';
+    if (editing == null) return '';
 
     return (
         <div id="exampleModalLive" className="modal fade show" role="dialog" aria-labelledby="exampleModalLiveLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
-                    <NewBookForm />
+                    <BookEditForm />
                 </div>
             </div>
         </div>

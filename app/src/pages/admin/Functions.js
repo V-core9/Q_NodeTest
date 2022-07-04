@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { userActions } from '../../store';
+import { appFunctionsActions } from '../../store';
 
 export { Functions };
 
 function Functions() {
     const dispatch = useDispatch();
     const user = useSelector(x => x.auth.user);
-    const { users } = useSelector(x => x.users);
+    const { appFunctions: functions } = useSelector(x => x.appFunctions);
 
     useEffect(() => {
-        dispatch(userActions.getAll());
+        console.log(functions);
+        console.log(appFunctionsActions);
+        dispatch(appFunctionsActions.getAll());
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -29,31 +31,30 @@ function Functions() {
                     </select>
                 </small>
             </div>
-            {users.length &&
+            {functions.length &&
                 <ul className="list-group">
-                    {users.map(user =>
-                        <li className="list-group-item" key={user.id}>
+                    {functions.map(func =>
+                        <li className="list-group-item" key={func.id}>
                             <div className="card">
-                                <img className="card-img-top" src='/logo192.png' alt={user.username} />
-                                <div className="card-body" title={user.username}>
+                                <img className="card-img-top" src='/logo192.png' alt={func.name} />
+                                <div className="card-body" title={func.name}>
                                     <div className="d-flex w-100 justify-content-between">
-                                        <h5 className="mb-1">{user.username}</h5>
+                                        <h5 className="mb-1">{func.name}</h5>
                                         <small>
-                                            <button className="btn-secondary" onClick={() => console.log("I will EDIT User:", user.id)}>🎨 Edit</button>
-                                            <button className="btn-danger" onClick={() => console.log("I will DELETE User:", user.id)} title="Delete Book">❌ Delete</button>
+                                            <button className="btn-secondary" onClick={() => console.log("I will EDIT User:", func.id)}>🎨 Edit</button>
+                                            <button className="btn-danger" onClick={() => console.log("I will DELETE User:", func.id)} title="Delete Book">❌ Delete</button>
                                         </small>
                                     </div>
-                                    <p className="mb-0">🆔 {user.id}</p>
-                                    <p className="mb-1">📧 {user.email}</p>
-                                    <small>Account Type: {user.isAdmin ? '👨‍💻 Admin' : '👤 User'}</small>
+                                    <p className="mb-0">🆔 {func.id}</p>
+                                    <small>Author: {func.authorId}</small>
                                 </div>
                             </div>
                         </li>
                     )}
                 </ul>
             }
-            {users.loading && <div className="spinner-border spinner-border-sm"></div>}
-            {users.error && <div className="text-danger">Error loading users: {users.error.message}</div>}
+            {functions.loading && <div className="spinner-border spinner-border-sm"></div>}
+            {functions.error && <div className="text-danger">Error loading users: {functions.error.message}</div>}
         </div >
     );
 }
