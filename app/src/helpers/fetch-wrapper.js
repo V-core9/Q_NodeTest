@@ -8,10 +8,10 @@ export const fetchWrapper = {
 };
 
 function request(method) {
-    return (url, body) => {
+    return async (url, body) => {
         const requestOptions = {
             method,
-            headers: authHeader(url)
+            headers: await authHeader(url)
         };
         if (body) {
             requestOptions.headers['Content-Type'] = 'application/json';
@@ -23,13 +23,19 @@ function request(method) {
 
 // helper functions
 
-function authHeader(url) {
+async function authHeader(url) {
     // return auth header with jwt if user is logged in and request is to the api url
     const token = authToken();
     const isLoggedIn = !!token;
     const isApiUrl = url.startsWith('http://localhost/api');
-    if (isLoggedIn && isApiUrl) {
-        return { Authorization: `Bearer ${token}` };
+    if (isLoggedIn && isApiUrl && url !== 'http://localhost/api/auth/refreshToken') {
+        const exp = store.getState().auth.user?.accessToken.exp * 1000 || Date.now();
+        if (exp < Date.now()) {
+            console.log('tokenExpired Refreshing...')
+            await store.dispatch(authActions.refreshToken({ refreshToken: store.getState().auth.user.refreshToken.token }));
+        }
+
+        return { Authorization: `Bearer ${authToken()}` };
     } else {
         return {};
     }
@@ -46,10 +52,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if ([401, 403].includes(response.status) && authToken()) {
 
-                if (data.message === 'TokenExpiredError') {
-                    const refreshToken = () => store.dispatch(authActions.refreshToken({ refreshToken: store.getState().auth.user?.refreshToken.token }));
-                    refreshToken();
-                } else {
+                if (data.message !== 'TokenExpiredError') {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                     const logout = () => store.dispatch(authActions.logout());
                     logout();

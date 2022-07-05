@@ -103,8 +103,7 @@ function createExtraReducers() {
         state.user = user;
 
         // get return url from location state or default to home page
-        const { from } = history.location.state || { from: { pathname: '/' } };
-        history.navigate(from);
+        history.navigate('/');
       },
       [rejected]: (state, action) => {
         state.error = action.error;
@@ -130,11 +129,8 @@ function createExtraReducers() {
   }
 
   function refreshToken() {
-    var { pending, fulfilled, rejected } = extraActions.refreshToken;
+    var { fulfilled, rejected } = extraActions.refreshToken;
     return {
-      [pending]: (state) => {
-        state.error = null;
-      },
       [fulfilled]: (state, action) => {
         let user = action.payload;
 
@@ -149,9 +145,6 @@ function createExtraReducers() {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
         state.user = user;
-      },
-      [rejected]: (state, action) => {
-        state.error = action.error;
       }
     };
   }
