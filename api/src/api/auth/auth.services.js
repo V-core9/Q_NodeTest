@@ -1,11 +1,12 @@
+const v_to_sha256 = require('v_to_sha256');
+
 const { db } = require('../../utils/db');
-const { hashToken } = require('../../utils/hashToken');
 
 function addRefreshTokenToWhitelist({ jti, refreshToken, userId }) {
   return db.refreshToken.create({
     data: {
       id: jti,
-      hashedToken: hashToken(refreshToken),
+      hashedToken: v_to_sha256.sync(refreshToken),
       userId
     },
   });

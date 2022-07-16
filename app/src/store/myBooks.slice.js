@@ -19,6 +19,11 @@ const slice = createSlice({
             // immutable state based off those changes
             state.newModalShow = !state.newModalShow;
         },
+        editBook: (state, action) => {
+            const { id } = action.payload;
+            console.log('Editing Book:', action);
+            state.editing = (typeof id == 'string') ? id : null;
+        }
     },
     extraReducers
 });
@@ -34,6 +39,7 @@ function createInitialState() {
     return {
         myBooks: [],
         newModalShow: false,
+        editing: null
     }
 }
 
@@ -43,6 +49,7 @@ function createExtraActions() {
         getMyBooks: getMyBooks(),
         newBook: newBook(),
         deleteBook: deleteBook(),
+        updateBook: updateBook(),
     };
 
     function getMyBooks() {
@@ -65,6 +72,13 @@ function createExtraActions() {
             async ({ id }) => await fetchWrapper.delete(`http://localhost/api/books/`, { id })
         );
     }
+
+    function updateBook() {
+        return createAsyncThunk(
+            `${name}/updateBook`,
+            async ({ id, title, description, content }) => await fetchWrapper.put(`http://localhost/api/books/${id}`, { title, description, content })
+        )
+    }
 }
 
 
@@ -73,6 +87,7 @@ function createExtraReducers() {
         ...getMyBooks(),
         ...newBook(),
         ...deleteBook(),
+        ...updateBook()
     };
 
     function getMyBooks() {
@@ -99,6 +114,25 @@ function createExtraReducers() {
             [fulfilled]: (state, action) => {
                 state.myBooks.push(action.payload);
                 console.log('newBookAction Done: ', state);
+            },
+            [rejected]: (state, action) => {
+                state.error = action.error;
+            }
+        };
+    }
+
+    function updateBook() {
+        var { pending, fulfilled, rejected } = extraActions.updateBook;
+        return {
+            [pending]: (state) => {
+                state.error = null;
+            },
+            [fulfilled]: (state, action) => {
+                //state.myBooks.push(action.payload);
+                const newState = [];
+                state.myBooks.map((value) => (value.id !== action.payload.id) ? newState.push(value) : newState.push(action.payload));
+                state.myBooks = newState;
+                console.log('updateBook Done: ', state);
             },
             [rejected]: (state, action) => {
                 state.error = action.error;

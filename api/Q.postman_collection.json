@@ -132,6 +132,36 @@
 					"response": []
 				},
 				{
+					"name": "Find By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNTYyZjk1YS0wNzU4LTRiYjYtYmMwMi01YmNkMDg3MDE2MGEiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTU3MzQxODYsImV4cCI6MTY1NTczNDQ4Nn0.InLppLmX_NEmTpJYBNLfkw7ch2TOTEG8_BsHT6xJgtg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update",
 					"request": {
 						"auth": {
@@ -347,6 +377,185 @@
 								"api",
 								"books",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "functions",
+			"item": [
+				{
+					"name": "List All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/functions/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"functions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Function",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZWRkYzMyZS0zMWIzLTQ5ZDctOWE0Ni01MWIwYmVlNDEzMTAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTY3NjE4MDIsImV4cCI6MTY1Njc2MjEwMn0.uO-4vaoed2CmGNfv_MVPsjHVSm0Z9kj52RWGCLQts9Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"calcArea\",\r\n    \"content\": \"const { width, height } = args; return width * height;\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/functions/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"functions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run Func",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"calcArea\",\r\n    \"args\": {\r\n        \"width\": 10,\r\n        \"height\": 22\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/functions/run/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"functions",
+								"run",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run Func byId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"width\": 10,\r\n    \"height\": 22\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/functions/run/byId/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"functions",
+								"run",
+								"byId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "087494e2-e57b-47a2-8e85-3e8ccd4bacad"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run Func byName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/functions/run/byName/:name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"functions",
+								"run",
+								"byName",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "getProcessEnv"
+								}
 							]
 						}
 					},

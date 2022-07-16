@@ -55,24 +55,24 @@ a.nav-item.nav-link.active {
 }
 
 
-.myBooks .modal {
+.modal {
   display: block;
   z-index: 100;
   background: #1e2730e0;
 }
 
-.myBooks .modal .modal-content {
+.modal .modal-content {
   background: #151c22;
   background-color: #151c22;
   box-shadow: 0 20px 50px -20px black;
   border: 2px solid #1a242c;
 }
 
-.myBooks .modal .modal-content .modal-header {
+.modal .modal-content .modal-header {
   border-bottom: 1px solid #1a242c;
 }
 
-.myBooks .modal .modal-content .modal-footer {
+.modal .modal-content .modal-footer {
   border-top: 1px solid #1a242c;
 }
 
@@ -123,8 +123,6 @@ ul>li.list-group-item:hover {
 
 
 
-
-
 .adminUsers .card {
   flex-direction: row;
   justify-content: space-between;
@@ -147,4 +145,14 @@ ul>li.list-group-item:hover {
 
 .adminUsers ul>li.list-group-item {
   padding: 0;
+}
+
+
+div#navbarScroll>* {
+  flex: 1;
+}
+
+
+.modal-content>.card {
+  flex-direction: column;
 }

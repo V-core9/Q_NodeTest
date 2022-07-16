@@ -20,6 +20,7 @@ model User {
   isAdmin       Boolean        @default(false)
   refreshTokens RefreshToken[]
   Book          Book[]
+  Function      Function[]
 }
 
 model RefreshToken {
@@ -35,6 +36,17 @@ model RefreshToken {
 model Book {
   id          String   @id @unique @default(uuid())
   title       String
+  description String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    String
+  Author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Function {
+  id          String   @id @unique @default(uuid())
+  name        String?  @unique
   description String
   content     String
   createdAt   DateTime @default(now())

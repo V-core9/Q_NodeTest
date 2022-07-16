@@ -46,8 +46,9 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   }
 });
 
-router.put('/', isAuthenticated, async (req, res, next) => {
+router.put('/:id?', isAuthenticated, async (req, res, next) => {
   try {
+    req.body.id = (req.params.id === undefined) ? req.body.id : req.params.id;
     const book = await findBookById(req.body.id);
     if (book.authorId === req.payload.userId) {
       res.json(await updateBook(req.body));

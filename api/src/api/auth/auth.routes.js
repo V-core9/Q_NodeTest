@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+const v_to_sha256 = require('v_to_sha256');
 const {
   findUserByEmail,
   createUserByEmailAndPassword,
@@ -14,11 +15,8 @@ const {
   deleteRefreshToken,
   revokeTokens
 } = require('./auth.services');
-const { hashToken } = require('../../utils/hashToken');
-
 
 const router = express.Router();
-
 
 router.post('/register', async (req, res, next) => {
   try {
@@ -38,20 +36,17 @@ router.post('/register', async (req, res, next) => {
     const username = req.body.username || uuidv4();
 
     const user = await createUserByEmailAndPassword({ email, password, username });
-    const jti = uuidv4();
-    const { accessToken, refreshToken } = generateTokens(user, jti);
-    await addRefreshTokenToWhitelist({ jti, refreshToken, userId: user.id });
 
     res.json({
-      accessToken,
-      refreshToken
+      id: user.id,
+      username: user.username,
     });
   } catch (err) {
     next(err);
   }
 });
 
-
+// Login Route Handle
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -78,10 +73,8 @@ router.post('/login', async (req, res, next) => {
     await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser.id });
 
     res.json({
-      username: existingUser.username,
       accessToken,
       refreshToken,
-      isAdmin: existingUser.isAdmin
     });
   } catch (err) {
     next(err);
@@ -104,7 +97,7 @@ router.post('/refreshToken', async (req, res, next) => {
       throw new Error('Unauthorized');
     }
 
-    const hashedToken = hashToken(refreshToken);
+    const hashedToken = v_to_sha256.sync(refreshToken);
     if (hashedToken !== savedRefreshToken.hashedToken) {
       res.status(401);
       throw new Error('Unauthorized');

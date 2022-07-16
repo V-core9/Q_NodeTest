@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import jwt_decode from "jwt-decode";
 
 import { history, fetchWrapper } from '../helpers';
 
 // create slice
-
 const name = 'auth';
 const initialState = createInitialState();
 const reducers = createReducers();
@@ -48,6 +48,7 @@ function createExtraActions() {
   return {
     login: login(),
     register: register(),
+    refreshToken: refreshToken(),
   };
 
   function login() {
@@ -63,6 +64,13 @@ function createExtraActions() {
       async ({ username, email, password }) => await fetchWrapper.post(`http://localhost/api/auth/register`, { username, email, password })
     );
   }
+
+  function refreshToken() {
+    return createAsyncThunk(
+      `${name}/refreshToken`,
+      async ({ refreshToken }) => await fetchWrapper.post(`http://localhost/api/auth/refreshToken`, { refreshToken })
+    );
+  }
 }
 
 function createExtraReducers() {
@@ -70,6 +78,7 @@ function createExtraReducers() {
   return {
     ...login(),
     ...register(),
+    ...refreshToken(),
   };
 
   function login() {
@@ -79,15 +88,22 @@ function createExtraReducers() {
         state.error = null;
       },
       [fulfilled]: (state, action) => {
-        const user = action.payload;
+        let user = action.payload;
+
+        const { accessToken, refreshToken } = user;
+
+        user = jwt_decode(refreshToken);
+        user.accessToken = jwt_decode(accessToken);
+        user.accessToken.token = accessToken;
+        user.refreshToken = jwt_decode(refreshToken);
+        user.refreshToken.token = refreshToken;
 
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
         state.user = user;
 
         // get return url from location state or default to home page
-        const { from } = history.location.state || { from: { pathname: '/' } };
-        history.navigate(from);
+        history.navigate('/');
       },
       [rejected]: (state, action) => {
         state.error = action.error;
@@ -102,18 +118,33 @@ function createExtraReducers() {
         state.error = null;
       },
       [fulfilled]: (state, action) => {
-        const user = action.payload;
-
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
-        state.user = user;
-
         // get return url from location state or default to home page
-        const { from } = history.location.state || { from: { pathname: '/' } };
+        const { from } = history.location.state || { from: { pathname: '/login' } };
         history.navigate(from);
       },
       [rejected]: (state, action) => {
         state.error = action.error;
+      }
+    };
+  }
+
+  function refreshToken() {
+    var { fulfilled, rejected } = extraActions.refreshToken;
+    return {
+      [fulfilled]: (state, action) => {
+        let user = action.payload;
+
+        const { accessToken, refreshToken } = user;
+
+        user = jwt_decode(refreshToken);
+        user.accessToken = jwt_decode(accessToken);
+        user.accessToken.token = accessToken;
+        user.refreshToken = jwt_decode(refreshToken);
+        user.refreshToken.token = refreshToken;
+
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
       }
     };
   }

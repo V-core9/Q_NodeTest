@@ -1,13 +1,14 @@
 // Public Pages
-export * from './Home';
-export * from './Login';
-export * from './Register';
+export * from './public/Home';
+export * from './public/Login';
+export * from './public/Register';
 
 
 // Author [Private] Pages
-export * from './Books';
-export * from './MyBooks';
+export * from './app/Books';
+export * from './app/MyBooks';
 
 
 // Admin [Private] Pages
-export * from './Users';
+export * from './admin/Users';
+export * from './admin/Functions';

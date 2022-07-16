@@ -1,0 +1,13 @@
+#!/bin/bash
+
+docker stop Q_api
+docker stop Q_app
+docker stop Q_phpmyadmin
+docker stop Q_mysql
+docker stop Q_nginx
+
+echo 'y' | docker system prune
+
+sh run dev
+
+docker exec -it Q_api sh -c 'npm run prisma:deploy'
