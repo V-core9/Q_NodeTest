@@ -5,8 +5,8 @@ const { db } = require('../../utils/db');
 const tempFileName = 'tempFileName';
 const tempFilePath = path.join(__dirname, `${tempFileName}.js`);
 
-function createFunc(func) {
-  return db.function.create({ data: func });
+function createFunc(data) {
+  return db.function.create({ data });
 }
 
 function updateFunction(func) {

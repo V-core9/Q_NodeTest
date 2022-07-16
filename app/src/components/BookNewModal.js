@@ -1,11 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { myBooksActions } from '../store';
-
 import { BookNewForm } from '.';
-
-const { toggleNewModal } = myBooksActions;
-
 
 export function BookNewModal() {
 

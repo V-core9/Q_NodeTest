@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { AppFunctionsNewModal, AppFunctionsEditor } from '../../components';
 
 import { appFunctionsActions } from '../../store';
 
@@ -19,42 +20,41 @@ function Functions() {
     }, []);
 
     return (
-        <div className="adminUsers">
-            <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">Hi {user?.username}!</h5>
-                <p>This is an example Admin Page</p>
-                <small>
-                    <select className="form-select">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                    </select>
-                </small>
-            </div>
-            {functions.length &&
-                <ul className="list-group">
-                    {functions.map(func =>
-                        <li className="list-group-item" key={func.id}>
-                            <div className="card">
-                                <img className="card-img-top" src='/logo192.png' alt={func.name} />
-                                <div className="card-body" title={func.name}>
-                                    <div className="d-flex w-100 justify-content-between">
-                                        <h5 className="mb-1">{func.name}</h5>
-                                        <small>
-                                            <button className="btn-secondary" onClick={() => console.log("I will EDIT User:", func.id)}>🎨 Edit</button>
-                                            <button className="btn-danger" onClick={() => console.log("I will DELETE User:", func.id)} title="Delete Book">❌ Delete</button>
-                                        </small>
+        <div className="appFunctions">
+            <nav className="navbar navbar-expand">
+                <div className="navbar-nav">
+                    <h1>System Custom Functions:</h1>
+                    <div className="btn-group" role="group">
+                        <button className="btn-primary" onClick={() => dispatch(appFunctionsActions.toggleNewForm())}>Create New ➕</button>
+                    </div>
+                </div>
+            </nav>
+            <div className="row">
+                {functions.length &&
+                    <ul className="list-group col-sm-5">
+                        {functions.map(func =>
+                            <li className="list-group-item" key={func.id}>
+                                <div className="card">
+                                    <div className="card-body" title={func.name}>
+                                        <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">{func.name}</h5>
+                                            <small>
+                                                <button className="btn-secondary" onClick={() => dispatch(appFunctionsActions.editFunction(func.id))}>🎨 Edit</button>
+                                                <button className="btn-danger" onClick={() => dispatch(appFunctionsActions.deleteFunction(func.id))}>❌ Delete</button>
+                                            </small>
+                                        </div>
+                                        <p className="mb-0">📑 {func.description}</p>
                                     </div>
-                                    <p className="mb-0">🆔 {func.id}</p>
-                                    <small>Author: {func.authorId}</small>
                                 </div>
-                            </div>
-                        </li>
-                    )}
-                </ul>
-            }
-            {functions.loading && <div className="spinner-border spinner-border-sm"></div>}
-            {functions.error && <div className="text-danger">Error loading users: {functions.error.message}</div>}
+                            </li>
+                        )}
+                    </ul>
+                }
+                {functions.loading && <div className="spinner-border spinner-border-sm"></div>}
+                {functions.error && <div className="text-danger">Error loading users: {functions.error.message}</div>}
+                <AppFunctionsNewModal />
+                <AppFunctionsEditor />
+            </div>
         </div >
     );
 }

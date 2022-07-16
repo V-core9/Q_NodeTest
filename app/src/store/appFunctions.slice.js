@@ -5,6 +5,8 @@ import { fetchWrapper } from '../helpers';
 const initialState = {
   appFunctions: [],
   status: 'idle',
+  newFormShow: false,
+  editing: null
 };
 
 export const getAll = createAsyncThunk(
@@ -14,18 +16,33 @@ export const getAll = createAsyncThunk(
 
 export const createNew = createAsyncThunk(
   'appFunctions/new',
-  async (func) => await fetchWrapper.post(`http://localhost/api/functions`, func)
+  async (func) => await fetchWrapper.post(`http://localhost/api/functions`, { ...func })
 );
 
-export const deleteFunc = createAsyncThunk(
+export const deleteFunction = createAsyncThunk(
   'appFunctions/delete',
-  async (func) => await fetchWrapper.post(`http://localhost/api/functions`, func)
+  async (id) => await fetchWrapper.delete(`http://localhost/api/functions`, { id })
+);
+
+export const updateFunction = createAsyncThunk(
+  'appFunctions/update',
+  async (func) => await fetchWrapper.put(`http://localhost/api/functions`, { ...func })
 );
 
 export const appFunctionsSlice = createSlice({
   name: 'appFunctions',
   initialState,
-  reducers: {},
+  reducers: {
+    endEditFunction: (state) => {
+      state.editing = null;
+    },
+    editFunction: (state, action) => {
+      state.editing = action.payload;
+    },
+    toggleNewForm: (state) => {
+      state.newFormShow = !state.newFormShow;
+    }
+  },
 
   extraReducers: (builder) => {
 
@@ -46,15 +63,32 @@ export const appFunctionsSlice = createSlice({
       .addCase(createNew.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log('createNew', action.payload);
+        state.appFunctions.push(action.payload);
       });
 
     builder
-      .addCase(deleteFunc.pending, (state) => {
+      .addCase(deleteFunction.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(deleteFunc.fulfilled, (state, action) => {
+      .addCase(deleteFunction.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log('deleteFunc', action.payload);
+        console.log('deleteFunction', action.payload);
+        let newFunctions = [];
+        state.appFunctions.map(item => (item.id !== action.payload.id) ? newFunctions.push(item) : null);
+        state.appFunctions = newFunctions;
+      });
+
+
+    builder
+      .addCase(updateFunction.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateFunction.fulfilled, (state, action) => {
+        state.status = 'idle';
+        console.log('updateFunction', action.payload);
+        let newFunctions = [];
+        state.appFunctions.map(item => newFunctions.push((item.id === action.payload.id) ? action.payload : item));
+        state.appFunctions = newFunctions;
       });
 
   },
@@ -64,8 +98,10 @@ export const appFunctionsSlice = createSlice({
 export const appFunctionsActions = {
   getAll,
   createNew,
-  deleteFunc,
-  appFunctionsSlice
+  deleteFunction,
+  updateFunction,
+  ...appFunctionsSlice.actions,
+  ...appFunctionsSlice.reducers
 };
 
 export const getFunctions = (state) => state.functions.value;

@@ -11,7 +11,7 @@ function generateAccessToken(user) {
     },
     process.env.JWT_ACCESS_SECRET,
     {
-      expiresIn: '10s',
+      expiresIn: '10m',
     }
   );
 }
@@ -26,7 +26,7 @@ function generateRefreshToken(user, jti) {
     },
     process.env.JWT_REFRESH_SECRET,
     {
-      expiresIn: '4h',
+      expiresIn: '6h',
     }
   );
 }

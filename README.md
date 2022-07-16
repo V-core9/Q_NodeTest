@@ -68,3 +68,13 @@ ___
   NGINX is used to proxy requests and provide access to both APP and API.  
   API => <http://localhost/api/>  
   APP => <http://localhost/>  
+
+## Development
+
+1. Application
+
+Start dev server like any other React application using a command:
+
+    start bash -c 'cd app; npm start'
+
+>NOTE: You need the API to run at <http://localhost/api> in order for the App to work entirely.

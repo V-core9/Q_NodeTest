@@ -17,6 +17,7 @@ const router = express.Router();
 router.post('/', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
     req.body.authorId = req.payload.userId;
+    req.body.name = req.body.name.replaceAll(' ', '-');
     res.json(await createFunc(req.body));
   } catch (err) {
     next(err);
